@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>VetBehavior Reader | Premium Medical Research</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+      <div id="app">
+          <nav class="glass-nav">
+              <div class="logo">VetBehavior <span>Reader</span></div>
+              <div class="nav-links">
+                  <a href="#" class="active">Search</a>
+                  <a href="#">Library</a>
+              </div>
+          </nav>
+
+          <header class="hero">
+              <h1>Deepen Your Veterinary Behavioral Medicine</h1>
+            <p>Professionalism completed with one paper per week</p>
+              <div class="search-container">
+                  <input type="text" id="searchInput" placeholder="Enter professor name or keyword (e.g., Karen Overall, Anxiety)">
+                  <button id="searchBtn">Search</button>
+              </div>
+          </header>
+
+          <main id="resultsGrid" class="results-grid">
+              <div class="empty-state">
+                  <p>Search keywords to start your research.</p>
+              </div>
+          </main>
+
+          <div id="readerOverlay" class="overlay hidden">
+              <div class="overlay-content">
+                  <button id="closeReader" class="close-btn">x</button>
+                  <div class="reader-header">
+                      <h2 id="readerTitle">Paper Title</h2>
+                      <div class="reader-meta">
+                          <span id="readerAuthors">Authors</span> - <span id="readerYear">Year</span>
+                      </div>
+                  </div>
+                  <div class="reader-body">
+                      <div class="column english">
+                          <h3>Original Abstract</h3>
+                          <div id="englishContent">English text will be displayed here.</div>
+                      </div>
+                      <div class="column korean">
+                          <h3>AI Medical Summary</h3>
+                        <div id="koreanContent">AI is analyzing medical context...</div>
+                      </div>
+                  </div>
+                  <div class="reader-footer">
+                      <button id="saveToObsidian" class="primary-btn">Save to Obsidian</button>
+                      <a id="pdfLink" href="#" target="_blank" class="secondary-btn">View Original PDF</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script src="app.js"></script>
+  </body>
+  </html>
+  
