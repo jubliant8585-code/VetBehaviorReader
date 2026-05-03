@@ -1,105 +1,74 @@
-const SEMANTIC_SCHOLAR_API = 'https://api.semanticscholar.org/graph/v1/paper/search';
-const SEARCH_FIELDS = 'title,authors,year,abstract,openAccessPdf,url,citationCount';
-
-document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('searchInput');
-      const searchBtn = document.getElementById('searchBtn');
-      const resultsGrid = document.getElementById('resultsGrid');
-      const readerOverlay = document.getElementById('readerOverlay');
-      const closeReader = document.getElementById('closeReader');
-
-                              // Search functionality
-                              searchBtn.addEventListener('click', () => performSearch(searchInput.value));
-      searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') performSearch(searchInput.value);
-      });
-
-                              closeReader.addEventListener('click', () => {
-                                        readerOverlay.classList.add('hidden');
-                              });
-
-                              async function performSearch(query) {
-                                        if (!query) return;
-
-          searchBtn.disabled = true;
-                                        searchBtn.textContent = 'Searching...';
-                                        resultsGrid.innerHTML = '<div class="loading">Fetching research data...</div>';
-
-          try {
-                        // Veterinary Behavioral Medicine context added to query if not present
-                                            const enhancedQuery = query.toLowerCase().includes('animal') || query.toLowerCase().includes('dog') || query.toLowerCase().includes('vet') 
-                                                ? query 
-                                                              : `${query} veterinary behavioral medicine`;
-
-                                            const response = await fetch(`${SEMANTIC_SCHOLAR_API}?query=${encodeURIComponent(enhancedQuery)}&limit=10&fields=${SEARCH_FIELDS}`);
-                        const data = await response.json();
-
-                                            if (data.data && data.data.length > 0) {
-                                                              displayResults(data.data);
-                                            } else {
-                                                              resultsGrid.innerHTML = '<div class="empty-state"><p>No results found. Please try another keyword.</p></div>';
-                                            }
-          } catch (error) {
-                        console.error('Search error:', error);
-                        resultsGrid.innerHTML = '<div class="error">An error occurred while fetching data.</div>';
-          } finally {
-                        searchBtn.disabled = false;
-                        searchBtn.textContent = 'Search';
+const papers = [
+      {
+                    id: 1,
+                    title: "\uAC15\uC544\uC9C0\uC758 \uBD84\uB9AC \uBD88\uC548 \uAD00\uB9AC\uC5D0 \uB300\uD55C \uCD5C\uC2E0 \uC9C0\uCE68",
+                    authors: "Dr. Karen Overall",
+                    year: "2023",
+                    originalAbstract: "A comprehensive review of pharmacological and behavioral interventions for canine separation anxiety.",
+                    medicalSummary: "\uC774 \uC530\uAD6C\uB294 \uBD84\uB9AC \uBD88\uC548\uC744 \uACAA\uB294 \uAC15\uC544\uC9C0\uB97C \uC704\uD55C \uC57D\uBB3C \uCE21\uB8CC\uC640 \uD589\uB3D9 \uAD50\uC124\uC758 \uACB0\uD569 \uC694\uBC95\uC744 \uAC15\uC870\uD569\uB2C8\uB2E4.",
+                    pdfLink: "#"
+      },
+      {
+                    id: 2,
+                    title: "\uACE0\uC591\uC774\uC758 \uD558\uBD80 \uC694\uB85C \uC9C8\uD658(FLUTD)\uACFC \uD589\uB3D9\uD559\uC801 \uC694\uC778",
+                    authors: "Dr. Danielle Gunn-Moore",
+                    year: "2022",
+                    originalAbstract: "Investigation into the correlation between environmental stress and the recurrence of idiopathic cystitis.",
+                    medicalSummary: "\uACE0\uC591\uC774\uC758 \uD2B9\uBC20\uC131 \uBC29\uAD11\uC5FC\uC774 \uD658\uACBD\uC801 \uC2A4\uD2B8\uB808\uC2A4\uC640 \uBC00\uC911\uD55C \uAD00\uB828\uC774 \uC774\uC74C\uC744 \uBC1D\uD788\uACE0 \uC774\uC2B5\uB2C8\uB2E4.",
+                    pdfLink: "#"
+      }
+      ];
+function createPaperCard(paper) {
+          const card = document.createElement('div');
+          card.className = 'paper-card';
+          card.innerHTML = `
+                  <div class="card-tag">Research Paper</div>
+                          <h3 class="card-title">${paper.title}</h3>
+                                  <p class="card-authors">${paper.authors}</p>
+                                          <div class="card-footer">
+                                                      <span class="card-year">${paper.year}</span>
+                                                                  <button class="read-btn" onclick="openReader(${paper.id})">Read Summary</button>
+                                                                          </div>
+                                                                              `;
+          return card;
+}
+function openReader(id) {
+          const paper = papers.find(p => p.id === id);
+          if (!paper) return;
+          document.getElementById('readerTitle').innerText = paper.title;
+          document.getElementById('readerAuthors').innerText = paper.authors;
+          document.getElementById('readerYear').innerText = paper.year;
+          document.getElementById('englishContent').innerText = paper.originalAbstract;
+          document.getElementById('koreanContent').innerText = paper.medicalSummary;
+          document.getElementById('pdfLink').href = paper.pdfLink;
+          document.getElementById('readerOverlay').classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+}
+function closeReader() {
+          document.getElementById('readerOverlay').classList.add('hidden');
+          document.body.style.overflow = 'auto';
+}
+document.getElementById('closeReader').addEventListener('click', closeReader);
+document.getElementById('searchBtn').addEventListener('click', () => {
+          const query = document.getElementById('searchInput').value.toLowerCase();
+          const resultsGrid = document.getElementById('resultsGrid');
+          resultsGrid.innerHTML = '';
+          const filtered = papers.filter(p => 
+                                                 p.title.toLowerCase().includes(query) || 
+                                                 p.authors.toLowerCase().includes(query) ||
+                        p.medicalSummary.toLowerCase().includes(query)
+                                             );
+          if (filtered.length === 0) {
+                        resultsGrid.innerHTML = '<div class="empty-state"><p>\uAC80\uC0C9 \uACB0\uACFC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.</p></div>';
+          } else {
+                        filtered.forEach(p => {
+                                          resultsGrid.appendChild(createPaperCard(p));
+                        });
           }
-                              }
-
-                              function displayResults(papers) {
-                                        resultsGrid.innerHTML = '';
-                                        papers.forEach(paper => {
-                                                      const card = document.createElement('div');
-                                                      card.className = 'paper-card';
-                                                      const authors = paper.authors.map(a => a.name).slice(0, 3).join(', ') + (paper.authors.length > 3 ? ' et al.' : '');
-
-                                                                   card.innerHTML = `
-                                                                                   <div class="tag">Behavioral Research</div>
-                                                                                                   <h3>${paper.title}</h3>
-                                                                                                                   <p class="authors">${authors} - ${paper.year || 'N/A'}</p>
-                                                                                                                                   <p style="font-size: 0.8rem; color: #2d5a27; margin-top: 10px;">Citations: ${paper.citationCount || 0}</p>
-                                                                                                                                               `;
-
-                                                                   card.addEventListener('click', () => openReader(paper));
-                                                      resultsGrid.appendChild(card);
-                                        });
-                              }
-
-                              function openReader(paper) {
-                                        document.getElementById('readerTitle').textContent = paper.title;
-                                        document.getElementById('readerAuthors').textContent = paper.authors.map(a => a.name).join(', ');
-                                        document.getElementById('readerYear').textContent = paper.year || 'N/A';
-                                        document.getElementById('englishContent').textContent = paper.abstract || 'No abstract available for this paper.';
-
-          const pdfBtn = document.getElementById('pdfLink');
-                                        if (paper.openAccessPdf && paper.openAccessPdf.url) {
-                                                      pdfBtn.href = paper.openAccessPdf.url;
-                                                      pdfBtn.style.display = 'inline-block';
-                                        } else {
-                                                      pdfBtn.href = paper.url;
-                                                      pdfBtn.textContent = 'Paper URL';
-                                        }
-
-          // AI Summarization Signal (Mock for now, explained to user)
-          document.getElementById('koreanContent').innerHTML = `
-                      <div class="ai-thinking">
-                                      AI is ready to analyze the paper and generate a translation reflecting the medical context.<br><br>
-                                                      Click the <strong>[Save to Obsidian]</strong> button to send it to your notes with an AI summary.
-                                                                  </div>
-                                                                          `;
-
-          const saveBtn = document.getElementById('saveToObsidian');
-                                        saveBtn.onclick = () => {
-                                                      alert('AI processing and Obsidian save requested. (Agent will detect and handle this)');
-                                                      console.log('REQUEST_AI_OBSIDIAN_SAVE', {
-                                                                        title: paper.title,
-                                                                        abstract: paper.abstract,
-                                                                        url: paper.url
-                                                      });
-                                        };
-
-          readerOverlay.classList.remove('hidden');
-                              }
+});
+window.addEventListener('DOMContentLoaded', () => {
+          const resultsGrid = document.getElementById('resultsGrid');
+          papers.forEach(p => {
+                        resultsGrid.appendChild(createPaperCard(p));
+          });
 });
