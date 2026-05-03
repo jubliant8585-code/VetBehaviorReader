@@ -3,71 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VetBehavior Reader | Premium Medical Research</title>
-    <link rel="stylesheet" href="style.css">
+    <title>VetBehavior Reader | Premium Research Discovery</title>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">&display=swap" rel="stylesheet">&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <nav class="glass-nav">
-            <div class="logo">VetBehavior <span>Reader</span></div>
-            <div class="nav-links">
-                <a href="#" class="active">Search</a>
-                <a href="#">Library</a>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <span class="logo-icon">🌿</span>
+                <h1>VetBehavior <span>Reader</span></h1>
             </div>
-        </nav>
-
-        <header class="hero">
-            <h1>동물행동의학의 깊이를 더하다</h1>
-            <p>매주 한 편의 논문으로 완성하는 전문성</p>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="교수님 성함 또는 키워드를 입력하세요">
-                <button id="searchBtn">검색하기</button>
-            </div>
+            <p class="subtitle">동물행동의학 최신 연구를 가장 효율적으로 탐색하고 분석합니다.</p>
         </header>
 
-        <!-- Featured Discovery Section -->
-        <section id="featuredSection" class="featured-section hidden">
-            <div class="section-title">
-                <span class="badge">Recommended</span>
-                <h2>오늘의 추천 연구</h2>
-                <p>동물행동의학 분야에서 가장 많이 인용된 권위 있는 연구를 소개합니다.</p>
-            </div>
-            <div id="featuredCardContainer">
-                <!-- Featured card will be injected here -->
-            </div>
-        </section>
+        <main>
+            <!-- 추천 논문 섹션 (Featured) -->
+            <section id="featured-section" class="featured-container">
+                <div class="section-header">
+                    <span class="badge">오늘의 추천 연구</span>
+                    <h2>Featured Discovery</h2>
+                    <p>인용수가 높은 권위 있는 연구를 매일 한 편 추천합니다.</p>
+                </div>
+                <div id="featured-card-slot">
+                    <div class="loading-shimmer">추천 연구를 불러오는 중...</div>
+                </div>
+            </section>
 
-        <main id="resultsGrid" class="results-grid">
-            <div class="empty-state">
-                <p>궁금한 키워드를 검색하여 연구를 시작하세요.</p>
-            </div>
+            <!-- 검색 섹션 -->
+            <section class="search-section">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="관심 있는 행동의학 키워드를 입력하세요 (예: Separation Anxiety)">
+                    <button id="search-button">
+                        <span class="search-icon">🔍</span>
+                        검색
+                    </button>
+                </div>
+            </section>
+
+            <!-- 결과 리스트 -->
+            <section id="results-container" class="results-grid">
+                <!-- 결과가 여기에 동적으로 생성됩니다 -->
+            </section>
         </main>
 
-        <div id="readerOverlay" class="overlay hidden">
+        <!-- 리더 모드 오버레이 (Reader Overlay) -->
+        <div id="reader-overlay" class="overlay hidden">
             <div class="overlay-content">
-                <button id="closeReader" class="close-btn">&times;</button>
-                <div class="reader-header">
-                    <h2 id="readerTitle">논문 제목</h2>
-                    <div class="reader-meta">
-                        <span id="readerAuthors">저자 정보</span> • <span id="readerYear">연도</span>
-                    </div>
-                </div>
-                <div class="reader-body">
-                    <div class="column english">
-                        <h3>Original Abstract</h3>
-                        <div id="englishContent"></div>
-                    </div>
-                    <div class="column korean">
-                        <h3>AI Medical Summary</h3>
-                        <div id="koreanContent"></div>
-                    </div>
-                </div>
-                <div class="reader-footer">
-                    <button id="saveToObsidian" class="primary-btn">Obsidian에 저장</button>
-                    <a id="pdfLink" href="#" target="_blank" class="secondary-btn">원본 PDF 보기</a>
+                <button class="close-overlay">×</button>
+                <div id="reader-body">
+                    <!-- 논문 내용이 여기에 로드됩니다 -->
                 </div>
             </div>
         </div>
