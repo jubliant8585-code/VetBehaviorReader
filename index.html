@@ -1,64 +1,48 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
   <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>VetBehavior Reader | Premium Medical Research</title>
+        <title>VetBehavior Reader</title>
       <link rel="stylesheet" href="style.css">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
   </head>
 <body>
       <div id="app">
                 <nav class="glass-nav">
-                              <div class="logo">VetBehavior <span>Reader</span></div>div>
-                            <div class="nav-links">
-                                            <a href="#" class="active">Search</a>a>
-                                            <a href="#">Library</a>a>
-                            </div>div>
+                              <div class="logo">VetBehavior Reader</div>div>
                 </nav>nav>
-              <header class="hero">
-                          <h1>&#46041;&#47932;&#54665;&#46041;&#51032;&#54617;&#51032; &#44590;&#54588;&#47484; &#45908;&#54616;&#45796;</h1>
-                          <p>&#47588;&#51452; &#54620; &#54200;&#51032; &#45436;&#47928;&#51004;&#47196; &#50756;&#49457;&#54616;&#45716; &#51204;&#47928;&#49457;</p>
-                          <div class="search-container">
-                                          <input type="text" id="searchInput" placeholder="&#44368;&#49688;&#45784; &#49457;&#54632; &#46640;&#45716; &#53412;&#50931;&#46300;&#47484; &#51077;&#47141;&#54616;&#49464;&#50836; (&#50696;: Karen Overall, Anxiety)">
-                                          <button id="searchBtn">&#44160;&#49353;&#54616;&#44592;</button>button>
-                          </div>div>
-              </header>header>
-              <main id="resultsGrid" class="results-grid">
-                          <div class="empty-state">
-                                          <p>&#44417;&#44552;&#54620; &#53412;&#50931;&#46300;&#47484; &#44160;&#49353;&#54616;&#50668; &#50672;&#44396;&#47484; &#49884;&#51089;&#54616;&#49464;&#50836;.</p>
-                          </div>div>
-              </main>main>
+                <header class="hero">
+                              <h1>Research Search</h1>
+                            <div class="search-container">
+                                            <input type="text" id="searchInput" placeholder="Search research...">
+                                            <button id="searchBtn">Search</button>button>
+                            </div>div>
+                </header>header>
+              <main id="resultsGrid" class="results-grid"></main>main>
               <div id="readerOverlay" class="overlay hidden">
                           <div class="overlay-content">
                                           <button id="closeReader" class="close-btn">&times;</button>button>
                                           <div class="reader-header">
-                                                              <h2 id="readerTitle">&#45436;&#47928; &#51228;&#47785;</h2>
-                                                              <div class="reader-meta">
-                                                                                      <span id="readerAuthors">&#51200;&#51088; &#51221;&#48372;</span> - <span id="readerYear">&#50672;&#46020;</span>
-                                                              </div>div>
+                                                              <h2 id="readerTitle"></h2>
                                           </div>div>
                                           <div class="reader-body">
                                                               <div class="column english">
-                                                                                      <h3>Original Abstract</h3>
-                                                                                      <div id="englishContent">&#50689;&#50612; &#50896;&#47928;&#51060; &#50668;&#44592;&#50640; &#54364;&#49884;&#46121;&#45768;&#45796;.</div>div>
+                                                                                      <h3>Original</h3>
+                                                                                      <div id="englishContent"></div>div>
                                                               </div>div>
                                                               <div class="column korean">
-                                                                                      <h3>AI Medical Summary</h3>
-                                                                                      <div id="koreanContent">AI&#44032; &#51032;&#54617;&#51201; &#47589;&#46973;&#51012; &#48516;&#49437; &#51473;&#51077;&#45768;&#45796;...</div>div>
+                                                                                      <h3>Korean</h3>
+                                                                                      <div id="koreanContent"></div>div>
                                                               </div>div>
                                           </div>div>
                                           <div class="reader-footer">
-                                                              <button id="saveToObsidian" class="primary-btn">Obsidian&#50640; &#51200;&#51109;</button>button>
-                                                              <a id="pdfLink" href="#" target="_blank" class="secondary-btn">&#50896;&#48376; PDF &#48372;&#44592;</a>a>
+                                                              <button id="saveToObsidian" class="primary-btn">Save</button>button>
+                                                              <a id="pdfLink" href="#" target="_blank" class="secondary-btn">PDF</a>a>
                                           </div>div>
                           </div>div>
               </div>div>
       </div>div>
     <script src="app.js"></script>
 </body>
-</html>html></p></p></h1></span>
+</html></h3></h1>
 </body></title>
   </head>
+</html>
