@@ -1,61 +1,74 @@
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-const resultsGrid = document.getElementById('resultsGrid');
-const readerOverlay = document.getElementById('readerOverlay');
-const readerTitle = document.getElementById('readerTitle');
-const englishContent = document.getElementById('englishContent');
-const koreanContent = document.getElementById('koreanContent');
-const closeReader = document.getElementById('closeReader');
-const pdfLink = document.getElementById('pdfLink');
-const saveToObsidian = document.getElementById('saveToObsidian');
+const SEMANTIC_SCHOLAR_API = 'https://api.semanticscholar.org/graph/v1/paper/search';
+const SEARCH_FIELDS = 'title,authors,year,abstract,openAccessPdf,url,citationCount';
 
-const researchData = [
-      {
-                    id: 1,
-                    title: "Dog Behavioral Development",
-                    authors: "Karen Overall",
-                    year: 2021,
-                    abstract: "Behavioral development in domestic dogs.",
-                    summary: "Dog behavior summary.",
-                    pdf: "#"
-      },
-      {
-                    id: 2,
-                    title: "Feline Anxiety",
-                    authors: "John Smith",
-                    year: 2022,
-                    abstract: "Anxiety in cats.",
-                    summary: "Cat anxiety summary.",
-                    pdf: "#"
-      }
-      ];
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const resultsGrid = document.getElementById('resultsGrid');
+    const readerOverlay = document.getElementById('readerOverlay');
+    const closeReader = document.getElementById('closeReader');
 
-function displayResults(data) {
-          resultsGrid.innerHTML = '';
-          data.forEach(item => {
-                        const card = document.createElement('div');
-                        card.className = 'result-card';
-                        card.innerHTML = `<h3>${item.title}</h3><p>${item.authors}</p><button onclick="openReader(${item.id})">Read</button>`;
-                        resultsGrid.appendChild(card);
-          });
-}
+    searchBtn.addEventListener('click', () => performSearch(searchInput.value));
+    searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(searchInput.value); });
+    closeReader.addEventListener('click', () => { readerOverlay.classList.add('hidden'); document.body.style.overflow = 'auto'; });
 
-window.openReader = (id) => {
-          const item = researchData.find(d => d.id === id);
-          if (!item) return;
-          readerTitle.textContent = item.title;
-          englishContent.textContent = item.abstract;
-          koreanContent.textContent = item.summary;
-          pdfLink.href = item.pdf;
-          readerOverlay.classList.remove('hidden');
-};
+    fetchFeaturedPaper();
 
-closeReader.onclick = () => readerOverlay.classList.add('hidden');
+    async function fetchFeaturedPaper() {
+        const featuredSection = document.getElementById('featuredSection');
+        const container = document.getElementById('featuredCardContainer');
+        try {
+            const response = await fetch(`${SEMANTIC_SCHOLAR_API}?query=veterinary+behavioral+medicine&limit=30&fields=${SEARCH_FIELDS}`);
+            const data = await response.json();
+            if (data.data && data.data.length > 0) {
+                const validPapers = data.data.filter(p => p.citationCount > 5);
+                const randomPaper = validPapers[Math.floor(Math.random() * validPapers.length)] || data.data[0];
+                renderFeaturedCard(randomPaper, container);
+                featuredSection.classList.remove('hidden');
+            }
+        } catch (error) { console.error('Featured error:', error); }
+    }
 
-searchBtn.onclick = () => {
-          const term = searchInput.value.toLowerCase();
-          const filtered = researchData.filter(d => d.title.toLowerCase().includes(term));
-          displayResults(filtered);
-};
+    function renderFeaturedCard(paper, container) {
+        const authors = paper.authors ? paper.authors.map(a => a.name).slice(0, 3).join(', ') + (paper.authors.length > 3 ? ' et al.' : '') : 'Unknown';
+        container.innerHTML = `
+            <div class="featured-card">
+                <div class="featured-info">
+                    <h3>${paper.title}</h3>
+                    <p class="authors">${authors} • ${paper.year || 'N/A'}</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">${paper.abstract || ''}</p>
+                </div>
+                <div class="featured-stats">
+                    <span class="stat-value">${paper.citationCount || 0}</span>
+                    <span class="stat-label">Citations</span>
+                </div>
+            </div>`;
+        container.querySelector('.featured-card').addEventListener('click', () => openReader(paper));
+    }
 
-displayResults(researchData);
+    async function performSearch(query) {
+        if (!query.trim()) return;
+        searchBtn.textContent = 'Searching...';
+        try {
+            const response = await fetch(`${SEMANTIC_SCHOLAR_API}?query=${encodeURIComponent(query + " veterinary behavioral")}&limit=12&fields=${SEARCH_FIELDS}`);
+            const data = await response.json();
+            displayResults(data.data || []);
+        } catch (error) { console.error(error); }
+        finally { searchBtn.textContent = '검색하기'; }
+    }
+
+    function displayResults(papers) {
+        resultsGrid.innerHTML = papers.map(paper => `
+            <div class="paper-card" onclick='openReader(${JSON.stringify(paper).replace(/'/g, "&apos;")})'>
+                <div class="tag">Research</div>
+                <h3>${paper.title}</h3>
+                <p>${paper.year || ''}</p>
+            </div>`).join('');
+    }
+
+    window.openReader = (paper) => {
+        document.getElementById('readerTitle').textContent = paper.title;
+        document.getElementById('englishContent').textContent = paper.abstract || 'No abstract';
+        readerOverlay.classList.remove('hidden');
+    };
+});
