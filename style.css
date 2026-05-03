@@ -10,3 +10,120 @@ body { font-family: sans-serif; background: #f0f0f0; margin: 0; }
 .reader-body { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
 .column { background: #f9f9f9; padding: 15px; border-radius: 6px; }
 .primary-btn { background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+
+
+/* Featured Section Styling */
+.featured-section {
+      padding: 0 5% 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+}
+
+.section-title {
+      margin-bottom: 30px;
+      text-align: left;
+}
+
+.badge {
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 10px;
+}
+
+.section-title h2 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+}
+
+.section-title p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+}
+
+/* Featured Card Specifics */
+.featured-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f1f8f1 100%);
+      border: 1px solid var(--accent-light);
+      padding: 40px;
+      border-radius: 25px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+      box-shadow: 0 15px 45px rgba(45, 90, 39, 0.08);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+}
+
+.featured-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 55px rgba(45, 90, 39, 0.12);
+}
+
+.featured-card::after {
+      content: 'TOP CITED';
+      position: absolute;
+      top: 20px;
+      right: -35px;
+      background: var(--accent);
+      color: white;
+      padding: 5px 40px;
+      transform: rotate(45deg);
+      font-size: 0.7rem;
+      font-weight: 700;
+}
+
+.featured-info h3 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      line-height: 1.3;
+}
+
+.featured-info .authors {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+}
+
+.featured-stats {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-left: 1px solid rgba(0, 0, 0, 0.05);
+      padding-left: 40px;
+}
+
+.stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+}
+
+.stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 5px;
+}
+
+@media (max-width: 900px) {
+      .featured-card {
+                grid-template-columns: 1fr;
+                padding: 30px;
+      }
+      .featured-stats {
+                border-left: none;
+                border-top: 1px solid rgba(0, 0, 0, 0.05);
+                padding-left: 0;
+                padding-top: 30px;
+      }
+}
