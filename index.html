@@ -1,48 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+        <meta charset="UTF-8">
         <title>VetBehavior Reader</title>
       <link rel="stylesheet" href="style.css">
   </head>
 <body>
-      <div id="app">
-                <nav class="glass-nav">
-                              <div class="logo">VetBehavior Reader</div>div>
-                </nav>nav>
-                <header class="hero">
-                              <h1>Research Search</h1>
-                            <div class="search-container">
-                                            <input type="text" id="searchInput" placeholder="Search research...">
-                                            <button id="searchBtn">Search</button>button>
-                            </div>div>
-                </header>header>
-              <main id="resultsGrid" class="results-grid"></main>main>
-              <div id="readerOverlay" class="overlay hidden">
-                          <div class="overlay-content">
-                                          <button id="closeReader" class="close-btn">&times;</button>button>
-                                          <div class="reader-header">
-                                                              <h2 id="readerTitle"></h2>
-                                          </div>div>
-                                          <div class="reader-body">
-                                                              <div class="column english">
-                                                                                      <h3>Original</h3>
-                                                                                      <div id="englishContent"></div>div>
-                                                              </div>div>
-                                                              <div class="column korean">
-                                                                                      <h3>Korean</h3>
-                                                                                      <div id="koreanContent"></div>div>
-                                                              </div>div>
-                                          </div>div>
-                                          <div class="reader-footer">
-                                                              <button id="saveToObsidian" class="primary-btn">Save</button>button>
-                                                              <a id="pdfLink" href="#" target="_blank" class="secondary-btn">PDF</a>a>
-                                          </div>div>
-                          </div>div>
+      <nav class="glass-nav">
+                <div class="logo">VetBehavior Reader</div>div>
+      </nav>nav>
+      <header class="hero">
+                <h1>Research Search</h1>
+              <div class="search-container">
+                          <input type="text" id="searchInput" placeholder="Search research...">
+                          <button id="searchBtn">Search</button>button>
               </div>div>
-      </div>div>
+      </header>header>
+    <main id="resultsGrid" class="results-grid"></main>main>
+    <div id="readerOverlay" class="overlay hidden">
+            <div class="overlay-content">
+                        <button id="closeReader" class="close-btn">&times;</button>button>
+                        <h2 id="readerTitle"></h2>
+                        <div class="reader-body">
+                                        <div class="column">
+                                                            <h3>Original</h3>
+                                                            <div id="englishContent"></div>div>
+                                        </div>div>
+                                        <div class="column">
+                                                            <h3>Korean</h3>
+                                                            <div id="koreanContent"></div>div>
+                                        </div>div>
+                        </div>div>
+                        <div class="reader-footer">
+                                        <a id="pdfLink" href="#" target="_blank" class="primary-btn">View PDF</a>a>
+                        </div>div>
+            </div>div>
+    </div>div>
     <script src="app.js"></script>
 </body>
-</html></h3></h1>
+</html>html></h3></h1>
 </body></title>
   </head>
-</html>
